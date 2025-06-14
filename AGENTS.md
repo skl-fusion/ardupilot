@@ -16,6 +16,7 @@
 ## Testing
 - Ensure submodules are up to date: `git submodule update --init --recursive`.
 - Run `./waf check` to build and execute the relevant tests.
+- Only terminate the build process after the changes have compiled successfully.
 - Run `./waf check --alltests` to execute the entire test suite.
 
 ## Code Style
