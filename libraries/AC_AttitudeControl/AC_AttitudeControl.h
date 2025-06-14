@@ -188,6 +188,9 @@ public:
     // Command an angular step (i.e change) in body frame angle
     virtual void input_angle_step_bf_roll_pitch_yaw(float roll_angle_step_bf_cd, float pitch_angle_step_bf_cd, float yaw_angle_step_bf_cd);
 
+    // Command an angular rate step (i.e change) in body frame rate
+    virtual void input_rate_step_bf_roll_pitch_yaw(float roll_rate_step_bf_cd, float pitch_rate_step_bf_cd, float yaw_rate_step_bf_cd);
+
     // Command a thrust vector in the earth frame and a heading angle and/or rate
     virtual void input_thrust_vector_rate_heading(const Vector3f& thrust_vector, float heading_rate_cds, bool slew_yaw = true);
     virtual void input_thrust_vector_heading(const Vector3f& thrust_vector, float heading_angle_cd, float heading_rate_cds);
@@ -325,8 +328,10 @@ public:
     // translates body frame acceleration limits to the euler axis
     void ang_vel_limit(Vector3f& euler_rad, float ang_vel_roll_max, float ang_vel_pitch_max, float ang_vel_yaw_max) const;
 
-    // translates body frame acceleration limits to the euler axis
-    Vector3f euler_accel_limit(const Vector3f &euler_rad, const Vector3f &euler_accel);
+    Vector3f euler_accel_limit(const Quaternion &att, const Vector3f &euler_accel);
+
+    // Calculates the body frame angular velocities to follow the target attitude
+    void update_attitude_target();
 
     // Calculates the body frame angular velocities to follow the target attitude
     void attitude_controller_run_quat();
@@ -426,6 +431,9 @@ protected:
 
     // Return the yaw slew rate limit in radians/s
     float get_slew_yaw_max_rads() const { return radians(get_slew_yaw_max_degs()); }
+
+    // get the latest gyro for the purposes of attitude control
+    const Vector3f get_latest_gyro() const;
 
     // Maximum rate the yaw target can be updated in Loiter, RTL, Auto flight modes
     AP_Float            _slew_yaw;
