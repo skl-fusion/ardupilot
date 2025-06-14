@@ -11,6 +11,9 @@
 - Configure for SITL with `./waf configure --board=sitl`.
 - Build a vehicle with `./waf <vehicle>` (for example `./waf copter`).
 - List available boards with `./waf list_boards`.
+- Install prerequisites with `Tools/environment_install/install-prereqs-<OS>.sh`
+  (for example `install-prereqs-ubuntu.sh -y`) to ensure dependencies such as
+  `python3-pexpect` are present.
 - Clean with `./waf clean` only when necessary.
 
 ## Testing
